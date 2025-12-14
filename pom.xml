@@ -23,7 +23,7 @@
     </dependency>
   </dependencies>
 </project>
-<<dependencies>
+<dependencies>
 <!-- JUnit 测试依赖，scope 为 test 表示仅测试环境生效 -->
 <dependency>
     <groupId>junit</groupId>
