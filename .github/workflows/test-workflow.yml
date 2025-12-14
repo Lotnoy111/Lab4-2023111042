@@ -1,0 +1,29 @@
+name: tests  # 工作流名称，可自定义
+on: push  # 触发条件：当代码push到仓库时执行
+jobs:
+  run_tests:  # 任务名称，可自定义
+    runs-on: ubuntu-latest  # 运行环境：最新版Ubuntu系统
+    steps:
+      # 步骤1：拉取仓库代码
+      - name: Checkout the repository
+        uses: actions/checkout@v4  # 拉取代码的官方Action，v4为稳定版
+      
+      # 步骤2：配置JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4  # 配置Java的官方Action
+        with:
+          java-version: '17'  # Java版本，与本地一致
+          distribution: 'temurin'  # 推荐的JDK发行版，兼容性更好
+      
+      # 步骤3：缓存Maven依赖（加速构建，避免重复下载）
+      - name: Cache Maven packages
+        uses: actions/cache@v4  # 缓存工具的官方Action
+        with:
+          path: ~/.m2/repository  # 缓存路径（Maven本地仓库）
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}  # 缓存键（基于系统和pom.xml哈希）
+          restore-keys: |
+            ${{ runner.os }}-m2-  # 缓存恢复规则
+      
+      # 步骤4：执行Maven测试
+      - name: Run tests with Maven
+        run: mvn -B test --file pom.xml  # 执行单元测试（-B表示批处理模式，无交互）
