@@ -1,9 +1,10 @@
+package org.example;  // 必须添加，确保和Solution同包
+
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-// 命名规则：L学号_20_Test.java（需将“2023001”替换为自己的学号）
-class L2023001_20_Test {
+public class L2023111042_20_Test {  // 加public，避免包访问限制
     private final Solution solution = new Solution();
 
     // 测试目的：验证单节点场景（n=1，无边）；测试用例：n=1，edges=[], 预期输出[0]
